@@ -16,9 +16,17 @@ class JobResult(Enum):
     Failed = 2
 
 @dataclass
-class Job:
+class JobId:
+    queue: str
     job_id: int
+
+    @property
+    def fqn(self):
+        return f"job: {self.queue}-{self.job_id}"
+
+@dataclass
+class Job:
+    job_id: JobId
     initiator: Initiator
     data: Data
     stage: Union[Callable, JobResult, None] = None
-

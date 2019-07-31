@@ -11,6 +11,17 @@ class Dispatcher(abc.ABC):
         self.broker = broker
         self.log = logging.getLogger(type(self).__qualname__)
 
+    async def monitor_queue(self, queue_name):
+        if queue_name in self.broker.job_queues:
+            queue = self.broker.job_queues[queue_name]
+        else:
+            queue = self.broker.register_job_queue(queue_name)
+
+        while True:
+            job = await self.broker.aquire_job(queue)
+            result = await self.dispatch(job)
+            await self.broker.complete_job(queue, job, result)
+
     @abc.abstractmethod
     async def dispatch(self, job: Job):
         pass
