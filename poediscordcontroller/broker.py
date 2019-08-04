@@ -7,7 +7,6 @@ from poediscordcontroller.model import Job
 @dataclass
 class JobQueue:
     name: str
-    pass
 
 class Broker(abc.ABC):
     def __init__(self, config):
