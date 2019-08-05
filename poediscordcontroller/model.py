@@ -6,10 +6,6 @@ from enum import Enum
 class Initiator:
     pass
 
-@dataclass
-class Data:
-    pass
-
 class JobResult(Enum):
     Complete = 0
     Delayed = 1
@@ -28,5 +24,6 @@ class JobId:
 class Job:
     job_id: JobId
     initiator: Initiator
-    data: Data
-    stage: Union[Callable, JobResult, None] = None
+    task: str
+    data: dict
+    stage: Union[str, JobResult, None] = None

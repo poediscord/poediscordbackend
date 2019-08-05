@@ -10,7 +10,9 @@ The file currently has the following form:
 {
     "broker": {
         "type": "redis",
-        "uri": "redis://myserver.example.com"
+        "uri": "redis://myserver.example.com/0"
     }
 }
 ```
+
+Before every test we flushdb() so make sure to use a different database number in your testing config.
