@@ -104,3 +104,4 @@ class Redis(Broker):
         data = root["data"]
         stage_name = root["stage"]
         job = Job(job_id, init, task, data, stage_name)
+        return job

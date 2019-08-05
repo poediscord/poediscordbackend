@@ -71,6 +71,9 @@ def test_aquire_job(broker, job_queue, job, loop):
     res, job_stored, job_chan_len, job_chan_stored, job_res = \
         loop.run_until_complete(add_job())
 
+    assert job_chan_len == 0
+    assert job_chan_stored == []
+
     assert json.loads(job_stored) == {
         "job_id": {
             "queue": job_id.queue,
@@ -82,6 +85,10 @@ def test_aquire_job(broker, job_queue, job, loop):
         "data": {},
     }
 
-    assert job_chan_len == 0
-
-    assert job_chan_stored == []
+    assert job_res.job_id.queue == job_queue
+    assert job_res.job_id.job_id == job.job_id.job_id
+    #assert job_res.init 
+    #TODO: write initiator stuff
+    assert job_res.task == job.task
+    assert job_res.data == job.data
+    assert job_res.stage == job.stage
